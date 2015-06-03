@@ -3,10 +3,14 @@
 
 fs = require('fs')
 xml2json = require('xml2json');
+//crossfilter = require('crossfilter');
 
+//var filename = 'Fund & Portfolio Management.emx'; 	// added 88 nodes; added 215 links; unaccounted for: 40
+//var filename = 'Front System.emx'; 					// added 170 nodes; added 72 links; unaccounted for: 68
+//var filename = 'Finance&Risk Systems.emx';
 
-// Hmm... Are we getting all clientDependency'ies?
-var outpath = ''; //make sure it exists
+// kolla clientDependency - mycket sånt i Account & Liquidity...
+var outpath = 'json/';
 var VERBOSE = true;
 
 // helper
@@ -158,8 +162,18 @@ function emx(filepath, depth) {
 			for (var i = 0; i < n.length; i++) {
 				if ( !! n[i]["packagedElement"]) {
 					parsePackagedElement(n[i]["packagedElement"], depth + 1);
-				}
-/*  removed else if since packagedElement can be both of type uml:Component AND have a packagedElement child. 
+				} /*  removed else if since packagedElement can be both of type uml:Component AND have a packagedElement child. For instance:
+				CAS
+				Safewatch LU
+				TFS
+				CM-Caesar
+				CTM
+				Intranet - Global
+				TLS
+				PACS
+				Global Service Provider
+				ISAT
+				PALS Stockholm
 				*/
 				if (n[i]["xmi:type"] == "uml:Component") {
 
