@@ -52,7 +52,6 @@ var Node = function(filename, id, x, y, name, description, group, keywords) {
 		this.filename = filename;
 		this.group = group;
 		this.keywords = keywords;
-		this.size = 0;
 	};
 
 var links = [];
@@ -108,11 +107,9 @@ links.forEach(function (i) {
 	// demand match on both source and target
 	if ((j = nodes.getNodeIndex(i.source())) && (k = nodes.getNodeIndex(i.target()))) {
 //		/* represent links as indices into nodes array */
-		linksarr.push({"source":j, "target":k, "name":i.name(), "type": i.type(), "description":i.description()});
-//		/* represent links as id's refering nodes array */
-//		linksarr.push({"source":i.source(), "target":i.target(), "name":i.name(), "type": i.type(), "description":i.description()});
-		nodes.list[j].size++;
-		nodes.list[k].size++;
+//		linksarr.push({"source":j, "target":k, "name":i.name(), "type": i.type(), "description":i.description()});
+		/* represent links as id's refering nodes array */
+		linksarr.push({"source":i.source(), "target":i.target(), "name":i.name(), "type": i.type(), "description":i.description()});
 	}
 });
 
