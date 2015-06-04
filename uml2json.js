@@ -6,7 +6,7 @@ xml2json = require('xml2json');
 
 // kolla clientDependency
 var outpath = '';
-var VERBOSE = true;
+var VERBOSE = false;
 
 // helper
 function isArray(test_me) {
@@ -105,7 +105,8 @@ var j,k;
 var linksarr = [];
 links.forEach(function (i) {
 	// demand match on both source and target
-	if ((j = nodes.getNodeIndex(i.source())) && (k = nodes.getNodeIndex(i.target()))) {
+	
+	if ((typeof nodes.getNodeIndex(i.source())) == "number" && (typeof nodes.getNodeIndex(i.target())) == "number") {
 //		/* represent links as indices into nodes array */
 //		linksarr.push({"source":j, "target":k, "name":i.name(), "type": i.type(), "description":i.description()});
 		/* represent links as id's refering nodes array */
