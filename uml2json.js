@@ -1,5 +1,5 @@
 // example:
-// node uml2json.js -d rsa/
+// node uml2json.js -d rsa_repository/
 
 fs = require('fs')
 xml2json = require('xml2json');
@@ -52,6 +52,7 @@ var Node = function(filename, id, x, y, name, description, group, keywords) {
 		this.filename = filename;
 		this.group = group;
 		this.keywords = keywords;
+		this.size = 0;
 	};
 
 var links = [];
@@ -87,11 +88,11 @@ if(process.argv[2] == '-d') var inpath = process.argv[3];
 if(process.argv[4] == '-d') var inpath = process.argv[5];
 
 if (typeof inpath == "undefined" && typeof filename == "undefined") {
-	console.log("Flags: -f files -d directory [rsa/]");
+	console.log("Flags: -f files -d directory");
 	process.exit();
 }
 
-if (typeof inpath == "undefined") inpath = "rsa/";
+if (typeof inpath == "undefined") inpath = "./";
 if (typeof filename == "undefined") {
 	var files = fs.readdirSync(inpath);
 	files.forEach(function (filename) {
@@ -111,6 +112,8 @@ links.forEach(function (i) {
 //		linksarr.push({"source":j, "target":k, "name":i.name(), "type": i.type(), "description":i.description()});
 		/* represent links as id's refering nodes array */
 		linksarr.push({"source":i.source(), "target":i.target(), "name":i.name(), "type": i.type(), "description":i.description()});
+		nodes.list[nodes.getNodeIndex(i.source())].size++;
+		nodes.list[nodes.getNodeIndex(i.target())].size++;
 	}
 });
 
